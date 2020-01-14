@@ -1,18 +1,15 @@
-import { userConstants } from '../_constants'
-import { userService } from '../_services'
-import { alertActions } from './'
-import { history } from '../_helpers'
+import { userConstants } from '../_constants/user.constants'
+import { userService } from '../_services/user.service'
+//import { alertActions } from './alert.actions'
+import { history } from '../_helpers/history'
 
 export const userActions = {
     login,
     logout,
-    register,
-    getAll,
-    delete: _delete
+    register
 }
 
 function login(usuario, password){
-    debugger
     return dispatch => {
         dispatch(request({usuario}))
 
@@ -24,30 +21,9 @@ function login(usuario, password){
             },
             error => {
                 dispatch(failure(error))
-                dispatch(alertActions.error(error))
+                //dispatch(alertActions.error(error))
             }
         )
-    }
-
-    function request(user) {
-        return {
-            type:userConstants.LOGIN_REQUEST, 
-            user
-        }
-    }
-
-    function success(user) {
-        return {
-            type:userConstants.LOGIN_SUCCESS, 
-            user
-        }
-    }
-
-    function failure(error) {
-        return {
-            type:userConstants.LOGIN_FAILURE, 
-            error
-        }
     }
 }
 
@@ -70,5 +46,26 @@ function register(user) {
                 dispatch(alert)
             }
         )
+    }
+}
+
+function request(user) {
+    return {
+        type:userConstants.LOGIN_REQUEST, 
+        user
+    }
+}
+
+function success(user) {
+    return {
+        type:userConstants.LOGIN_SUCCESS, 
+        user
+    }
+}
+
+function failure(error) {
+    return {
+        type:userConstants.LOGIN_FAILURE, 
+        error
     }
 }

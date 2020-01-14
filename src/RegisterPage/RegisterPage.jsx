@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { userActions } from '../_actions/user.actions';
  
-import { userActions } from '../_actions';
- 
-export default class RegisterPage extends React.Component {
+class RegisterPage extends React.Component {
     constructor(props) {
         super(props);
  
@@ -36,9 +35,9 @@ export default class RegisterPage extends React.Component {
  
         this.setState({ submitted: true });
         const { user } = this.state;
-        const { dispatch } = this.props;
+        const { register } = this.props;
         if (user.usuario && user.password) {
-            dispatch(userActions.register(user));
+            register(user.usuario, user.password);
         }
     }
  
@@ -80,6 +79,11 @@ function mapStateToProps(state) {
         registering
     };
 }
- 
-const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
-export { connectedRegisterPage as RegisterPage };
+
+const mapDispatchToProps = dispatch => {
+    return {
+        register: (usuario, password) => dispatch(userActions.register(usuario, password)),
+    }
+} 
+
+export default connect(mapStateToProps,mapDispatchToProps)(RegisterPage)
