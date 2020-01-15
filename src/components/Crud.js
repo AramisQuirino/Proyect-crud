@@ -2,13 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { userActions } from '../actions/user.actions'
 import { Table } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom';
 
 class Crud extends Component{
     constructor(props) {
         super(props);
-
-        const {getAll} = this.props
-        getAll()
  
         this.state = {
             list: []
@@ -16,21 +14,23 @@ class Crud extends Component{
     }
 
     renderList() {
-        return this.props.getAll((r) => {
-            return (
-                <tr key={r.ReciboId}>
-                    <td>{r.ReciboId}</td>
-                    <td>{r.Proveedor}</td>
-                    <td>{r.Monto}</td>
-                    <td>{r.Moneda}</td>
-                    <td>{r.Fecha}</td>
-                    <td>{r.Comentario}</td>
-                </tr>
-            )
-        })
+        // return this.props.getAll((r) => {
+        //     return (
+        //         <tr key={r.ReciboId}>
+        //             <td>{r.ReciboId}</td>
+        //             <td>{r.Proveedor}</td>
+        //             <td>{r.Monto}</td>
+        //             <td>{r.Moneda}</td>
+        //             <td>{r.Fecha}</td>
+        //             <td>{r.Comentario}</td>
+        //         </tr>
+        //     )
+        // })
     }
 
     render(){
+        const { loggedIn } = this.props;
+
         return(
             <div>
                 <h2>Recibos</h2>
@@ -47,17 +47,16 @@ class Crud extends Component{
                     </thead>
                     { this.renderList() }
                 </Table>
+            {!loggedIn && <Redirect to="/login" />}
             </div>
         )
     }
 
 }
 
-function mapStateToProps(state) {
-    return {
-        list: state.list
-    };
-}
+const mapStateToProps = ({ authentication }) => ({
+    loggedIn: authentication.get('loggedIn'),
+})
 
 const mapDispatchToProps = dispatch => {
     return {

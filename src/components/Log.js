@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import '../App.css'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions/user.actions';
 import { Alert } from 'react-bootstrap';
@@ -37,12 +37,14 @@ class Log extends Component {
         const { login } = this.props;
         if (usuario && password) {
             login(usuario,password)
+            this.setState({ redirect:true })
         }
     }
 
     render(){
-        const { loggingIn } = this.props;
+        const { loggedIn } = this.props;
         const { usuario, password, submitted } = this.state;
+
         return(
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
@@ -68,10 +70,10 @@ class Log extends Component {
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary">Login</button>
-                        {loggingIn}
                         <Link to="/register" className="btn btn-link">Register</Link>
-                    </div>
+                    </div>authetication
                 </form>
+                {loggedIn && <Redirect to="/crud"></Redirect>}
             </div>
         )
     }
@@ -79,12 +81,9 @@ class Log extends Component {
 }
 
  
-function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
-    return {
-        loggingIn
-    };
-}
+const mapStateToProps = ({authentication}) => ({
+    loggedIn: authentication.get('loggedIn')
+})
 
 const mapDispatchToProps = dispatch => {
     return {

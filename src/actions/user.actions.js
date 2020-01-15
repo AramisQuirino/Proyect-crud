@@ -10,19 +10,16 @@ export const userActions = {
 }
 
 function login(usuario, password){
-    return dispatch => {
+    return async (dispatch) => {
         dispatch(request({usuario}))
-
-        userService.login(usuario, password)
-        .then(
-            user => {
-                dispatch(success(user))
-                history.push('/')
-            },
-            error => {
-                dispatch(failure(error))
-            }
-        )
+        try {
+            const user = await userService.login(usuario, password);
+            dispatch(success(user));
+        }
+        catch(error) {
+            dispatch(failure(error))
+            alert('Usuario o cuenta incorrectos');
+        }
     }
 }
 
@@ -34,7 +31,7 @@ function logout() {
 }
 
 function register(usuario, password) {
-    return dispatch => {
+    return async (dispatch) => {
         dispatch(request({usuario, password}))
 
         userService.register(usuario, password)
