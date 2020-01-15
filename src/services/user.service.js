@@ -11,7 +11,6 @@ export const userService = {
 };
  
 function login(usuario, password) {
-    debugger
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

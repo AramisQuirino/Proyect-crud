@@ -1,13 +1,18 @@
+import { fromJS } from 'immutable'
 import { userConstants } from '../constants/user.constants';
+
+const initialState = fromJS({
+  registering :false
+})
  
-export function registration(state = {}, action) {
+export function registration(state = initialState, action) {
   switch (action.type) {
-    case userConstants.REGISTER_REQUEST:
-      return { registering: true };
+    case userConstants.REGISTER_REQUEST: 
+      return state.set('registering', true)
     case userConstants.REGISTER_SUCCESS:
-      return {};
+      return state.set('registering', false)
     case userConstants.REGISTER_FAILURE:
-      return {};
+      return state.set('registering', false)
     default:
       return state
   }

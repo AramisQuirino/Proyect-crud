@@ -37,7 +37,6 @@ class Log extends Component {
         const { login } = this.props;
         if (usuario && password) {
             login(usuario,password)
-            this.setState({ redirect:true })
         }
     }
 
@@ -71,7 +70,7 @@ class Log extends Component {
                     <div className="form-group">
                         <button className="btn btn-primary">Login</button>
                         <Link to="/register" className="btn btn-link">Register</Link>
-                    </div>authetication
+                    </div>
                 </form>
                 {loggedIn && <Redirect to="/crud"></Redirect>}
             </div>

@@ -1,66 +1,69 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import { userActions } from '../actions/user.actions'
-import { Table } from 'react-bootstrap'
-import { Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import '../App.css'
+import { Table } from 'reactstrap'
+import { connect } from 'react-redux';
+import { userActions } from '../actions/user.actions';
 
-class Crud extends Component{
+
+class Crud extends Component {
     constructor(props) {
         super(props);
  
         this.state = {
-            list: []
+            Recibo: {
+                ReciboId: '',
+                Proveedor: '',
+                Monto: '',
+                Moneda: '',
+                Fecha: '',
+                Comentario: ''
+            }
         };
     }
 
-    renderList() {
-        // return this.props.getAll((r) => {
-        //     return (
-        //         <tr key={r.ReciboId}>
-        //             <td>{r.ReciboId}</td>
-        //             <td>{r.Proveedor}</td>
-        //             <td>{r.Monto}</td>
-        //             <td>{r.Moneda}</td>
-        //             <td>{r.Fecha}</td>
-        //             <td>{r.Comentario}</td>
-        //         </tr>
-        //     )
-        // })
+    componentWillMount() {
+        const { getAll } = this.props
+        getAll()
     }
 
-    render(){
-        const { loggedIn } = this.props;
-
-        return(
-            <div>
-                <h2>Recibos</h2>
-                <Table responsive>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Proveedor</th>
-                            <th>Monto</th>
-                            <th>Moneda</th>
-                            <th>Fecha</th>
-                            <th>Comentario</th>
-                        </tr>
-                    </thead>
-                    { this.renderList() }
-                </Table>
-            {!loggedIn && <Redirect to="/login" />}
-            </div>
+    render() {
+        const { Recibo } = this.state
+        return (
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Proveedor</th>
+                        <th>Monto</th>
+                        <th>Moneda</th>
+                        <th>Fecha</th>
+                        <th>Comentario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ Recibo.ReciboId }</td>
+                        <td>{ Recibo.Proveedor }</td>
+                        <td>{ Recibo.Monto }</td>
+                        <td>{ Recibo.Moneda }</td>
+                        <td>{ Recibo.Fecha }</td>
+                        <td>{ Recibo.Comentario }</td>
+                    </tr>
+                </tbody>
+            </Table>
         )
     }
-
 }
 
-const mapStateToProps = ({ authentication }) => ({
-    loggedIn: authentication.get('loggedIn'),
-})
+function mapStateToProps(state) {
+    return {
+        Recibo: state.Recibo
+    };
+}
 
 const mapDispatchToProps = dispatch => {
     return {
-        getAll: () => dispatch(userActions.getAll()),
+        getAll: () => dispatch(userActions.getAll())
     }
 } 
 

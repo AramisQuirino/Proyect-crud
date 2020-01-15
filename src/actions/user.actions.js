@@ -39,17 +39,35 @@ function register(usuario, password) {
             user => {
                 dispatch(success())
                 history.push('/login')
-                dispatch(alert)
+                alert('Proceso completo')
+
+            }
+        )
+        .catch(
+            error => {
+                dispatch(failure(error))
+                alert(error)
             }
         )
     }
 }
 
 function getAll() {
-    return dispatch => {
+    return async (dispatch) => {
+        dispatch(request())
+
         userService.getAll()
         .then(
-            history.push('/crud')
+            r => {
+                dispatch(success())
+                alert('entro al getall')
+            }
+        )
+        .catch(
+            error => {
+                dispatch(failure(error))
+                alert(error)
+            }
         )
     }
 }
