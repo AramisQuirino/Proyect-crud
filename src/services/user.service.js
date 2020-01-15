@@ -41,7 +41,9 @@ function getAll() {
         headers: authHeader()
     };
  
-    return fetch(config.apiUrl + '/recibo', requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/recibo', requestOptions)
+    .then(handleResponse, console.log(handleResponse))
+    .catch(handleError);
 }
  
 function getById(id) {

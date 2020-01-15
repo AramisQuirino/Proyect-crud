@@ -59,13 +59,11 @@ function getAll() {
         userService.getAll()
         .then(
             r => {
-                dispatch(success())
                 alert('entro al getall')
             }
         )
         .catch(
             error => {
-                dispatch(failure(error))
                 alert(error)
             }
         )
