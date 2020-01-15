@@ -2,20 +2,22 @@ import React, {Component} from 'react'
 import '../App.css'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { userActions } from '../_actions/user.actions';
+import { userActions } from '../actions/user.actions';
+import { Alert } from 'react-bootstrap';
 
 class Log extends Component {
 
     constructor(props) {
         super(props);
-        
+
         const {logout} = this.props
         logout()
  
         this.state = {
             usuario: '',
             password: '',
-            submitted: false
+            submitted: false,
+            message: ''
         };
  
         this.handleChange = this.handleChange.bind(this);
@@ -44,6 +46,11 @@ class Log extends Component {
         return(
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
+                {
+                    this.state.message !== ''? (
+                        <Alert color="danger"></Alert>
+                    ) : ''
+                }
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !usuario ? ' has-error' : '')}>
                         <label htmlFor="usuario">Usuario</label>
@@ -82,7 +89,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
     return {
         logout: () => dispatch(userActions.logout()),
-        login: (usuario, password) => dispatch(userActions.login(usuario, password)),
+        login: (usuario, password) => dispatch(userActions.login(usuario, password))
     }
 } 
 

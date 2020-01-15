@@ -1,12 +1,12 @@
-import { userConstants } from '../_constants/user.constants'
-import { userService } from '../_services/user.service'
-//import { alertActions } from './alert.actions'
-import { history } from '../_helpers/history'
+import { userConstants } from '../constants/user.constants'
+import { userService } from '../services/user.service'
+import { history } from '../helpers/history'
 
 export const userActions = {
     login,
     logout,
-    register
+    register,
+    getAll
 }
 
 function login(usuario, password){
@@ -21,7 +21,6 @@ function login(usuario, password){
             },
             error => {
                 dispatch(failure(error))
-                //dispatch(alertActions.error(error))
             }
         )
     }
@@ -34,17 +33,26 @@ function logout() {
     }
 }
 
-function register(user) {
+function register(usuario, password) {
     return dispatch => {
-        dispatch(request(user))
+        dispatch(request({usuario, password}))
 
-        userService.register(user)
+        userService.register(usuario, password)
         .then(
             user => {
                 dispatch(success())
                 history.push('/login')
                 dispatch(alert)
             }
+        )
+    }
+}
+
+function getAll() {
+    return dispatch => {
+        userService.getAll()
+        .then(
+            history.push('/crud')
         )
     }
 }

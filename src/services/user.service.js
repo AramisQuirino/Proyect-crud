@@ -1,4 +1,4 @@
-import { authHeader, config } from '../_helpers';
+import { authHeader, config } from '../helpers';
  
 export const userService = {
     login,
@@ -54,14 +54,19 @@ function getById(id) {
     return fetch(config.apiUrl + '/recibo/' + id, requestOptions).then(handleResponse, handleError);
 }
  
-function register(user) {
+function register(Usuario, Password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(Usuario, Password)
     };
  
-    return fetch(config.apiUrl + '/Auth/create', requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/Auth/create', requestOptions)
+        .then(handleResponse, handleError)
+        .then(r => {
+            alert(r)
+        })
+
 }
  
 function update(user) {
