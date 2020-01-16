@@ -7,7 +7,8 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    add
 };
  
 function login(usuario, password) {
@@ -42,7 +43,10 @@ function getAll() {
     };
  
     return fetch(config.apiUrl + '/recibo', requestOptions)
-    .then(handleResponse, console.log(handleResponse))
+    .then(handleResponse)
+    .then(r => {
+        return r
+    })
     .catch(handleError);
 }
  
@@ -69,6 +73,22 @@ function register(Usuario, Password) {
         })
 
 }
+
+function add(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+ 
+    return fetch(config.apiUrl + '/recibo/', requestOptions)
+    .then(handleResponse)
+    .then(r => {
+        console.log(r)
+        return r
+    })
+    .catch(handleError);
+}
  
 function update(user) {
     const requestOptions = {
@@ -77,17 +97,29 @@ function update(user) {
         body: JSON.stringify(user)
     };
  
-    return fetch(config.apiUrl + '/recibo/' + user.id, requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/recibo/' + user.reciboId, requestOptions)
+    .then(handleResponse)
+    .then(r => {
+        console.log(r)
+        return r
+    })
+    .catch(handleError);
 }
  
 // prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
+function _delete(user) {
     const requestOptions = {
         method: 'DELETE',
         headers: authHeader()
     };
  
-    return fetch(config.apiUrl + '/recibo/' + id, requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/recibo/' + user.reciboId, requestOptions)
+    .then(handleResponse)
+    .then(r => {
+        console.log(r)
+        return r
+    })
+    .catch(handleError);
 }
  
 function handleResponse(response) {
