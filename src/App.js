@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Route,  BrowserRouter, Switch} from 'react-router-dom'
 import './App.css'
 import Login from './components/Log'
-import Register from './components/RegisterPage'
 import Crud from './components/Crud'
 
 export default class App extends Component{
@@ -12,7 +11,6 @@ export default class App extends Component{
                 <BrowserRouter>
                     <Switch>
                         <Route exact path="/" component={Login} />
-                        <Route path="/register" component={Register} />
                         <Route path="/login" component={Login} />
                         <Route path="/crud" component={Crud}/>
                     </Switch>

@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import '../App.css'
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions/user.actions';
-import { Alert } from 'react-bootstrap';
 
 class Log extends Component {
 
@@ -47,11 +46,6 @@ class Log extends Component {
         return(
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
-                {
-                    this.state.message !== ''? (
-                        <Alert color="danger"></Alert>
-                    ) : ''
-                }
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !usuario ? ' has-error' : '')}>
                         <label htmlFor="usuario">Usuario</label>
@@ -69,7 +63,6 @@ class Log extends Component {
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary">Login</button>
-                        <Link to="/register" className="btn btn-link">Register</Link>
                     </div>
                 </form>
                 {loggedIn && <Redirect to="/crud"></Redirect>}
